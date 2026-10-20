@@ -7,10 +7,137 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="landing.css">
 </head>
-<body>
+<body class="on-landing">
+
+<!-- Landing page (desktop only; phones start at the app's welcome screen) -->
+<div id="landing" class="landing">
+  <header class="l-header">
+    <div class="l-wrap l-header-inner">
+      <a class="l-logo" href="#top"><span class="logo-mark">J</span>Jobify</a>
+      <nav class="l-links" aria-label="Page sections">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#who">Who it is for</a>
+        <a href="#mission">Our mission</a>
+      </nav>
+      <button type="button" class="btn btn-sm l-cta" data-start>Get started</button>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="l-wrap hero-inner">
+      <div class="hero-copy">
+        <h1>Real work. Real feedback. Ready for the job.</h1>
+        <p class="lead">Build proof of your skills with real projects, mentors from industry, and a portfolio employers can trust.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-gold" data-start>Get started</button>
+          <a class="btn-link" href="#how">See how it works</a>
+        </div>
+        <ul class="hero-points">
+          <li>Practical projects from real workplace tasks</li>
+          <li>Feedback from industry mentors</li>
+          <li>AI help with your resume and interviews</li>
+        </ul>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="card">
+          <div class="row"><span class="pill">Digital marketing</span><span class="small">Project 1 of 3</span></div>
+          <div class="project-title">Plan a 4-week social media campaign for a small bakery</div>
+          <div class="progress"><div style="width:66%"></div></div>
+          <div class="small">2 of 3 steps done</div>
+        </div>
+        <div class="card card-strong v-feedback">
+          <div class="mentor"><div class="avatar">M</div><div><div class="h3">Mentor feedback</div><div class="small">Industry mentor · sample comment</div></div></div>
+          <div class="body"><b>What worked:</b> Your plan is clear and easy to follow.</div>
+          <div class="body"><b>To improve:</b> Add one measurable goal.</div>
+        </div>
+        <div class="card v-resume">
+          <span class="pill">ATS-friendly format</span>
+          <div class="body">• Completed a real-work project</div>
+          <div class="body">• Applied written feedback from a mentor</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-section" id="how">
+    <div class="l-wrap">
+      <div class="eyebrow">HOW IT WORKS</div>
+      <h2 class="l-title">From learning to earning in four steps</h2>
+      <ol class="steps-grid">
+        <li><span class="step-n">1</span><h3>Tell us your goal</h3><p>Choose the kind of work you want and where you are today.</p></li>
+        <li><span class="step-n">2</span><h3>Complete real projects</h3><p>Work on tasks based on what employers and clients actually need.</p></li>
+        <li><span class="step-n">3</span><h3>Get mentor feedback</h3><p>Industry professionals review your work and tell you how to improve it.</p></li>
+        <li><span class="step-n">4</span><h3>Show your work, get matched</h3><p>Build a portfolio and resume, then see jobs and freelance work that fit.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="l-section l-alt" id="features">
+    <div class="l-wrap">
+      <div class="eyebrow">FEATURES</div>
+      <h2 class="l-title">Everything you need to be job-ready</h2>
+      <div class="feature-grid">
+        <article class="feature"><h3>Skills and interest check</h3><p>Tell us the work you want. We match you to in-demand skills and projects.</p></article>
+        <article class="feature"><h3>Real-work projects</h3><p>Practise on tasks based on real workplace needs, not theory.</p></article>
+        <article class="feature"><h3>Mentor feedback</h3><p>Get clear notes from industry professionals on every project.</p></article>
+        <article class="feature"><h3>Portfolio and AI resume</h3><p>Turn finished projects into a portfolio and an ATS-friendly resume.</p></article>
+        <article class="feature"><h3>AI interview practice</h3><p>Practise your answers, get feedback, then see jobs and freelance work that fit.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-section" id="who">
+    <div class="l-wrap">
+      <div class="eyebrow">WHO IT IS FOR</div>
+      <h2 class="l-title">Built for young people starting out</h2>
+      <div class="who-grid">
+        <article class="who">
+          <h3>Recent graduates</h3>
+          <p>You have the degree but no work experience yet. Jobify gives you real projects to point to in your first applications.</p>
+          <button type="button" class="btn btn-sm" data-start>Start as a graduate</button>
+        </article>
+        <article class="who">
+          <h3>Self-taught, no degree</h3>
+          <p>You are learning on your own and want to earn. Jobify helps you prove your skills and find freelance or entry-level work.</p>
+          <button type="button" class="btn btn-sm" data-start>Start as self-taught</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission" id="mission">
+    <div class="l-wrap">
+      <div class="eyebrow">OUR MISSION</div>
+      <p class="mission-text">To equip young Nigerians with high-quality, in-demand skills within the next three to ten years, so they can increase their earning power and build sustainable income.</p>
+      <button type="button" class="btn btn-gold" data-start>Try the prototype</button>
+    </div>
+  </section>
+
+  <footer class="l-footer">
+    <div class="l-wrap">
+      <span>Jobify · Prototype for user testing. All content is sample content.</span>
+      <span>Built by Vida Dim for the ALU Capstone Field Mission Assignment.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- App -->
 <div class="app">
+  <header class="topbar">
+    <button type="button" class="topbar-logo" data-landing aria-label="Back to the Jobify home page"><span class="logo-mark">J</span>Jobify</button>
+    <nav id="topnav" class="topnav" aria-label="Main" hidden>
+      <button type="button" data-go="home">Home</button>
+      <button type="button" data-go="project">Project</button>
+      <button type="button" data-go="portfolio">Portfolio</button>
+      <button type="button" data-go="practice">Practice</button>
+    </nav>
+  </header>
+
   <main id="screen" class="screen" aria-live="polite"></main>
+
   <nav id="nav" class="nav" aria-label="Main" hidden>
     <button type="button" data-go="home">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>

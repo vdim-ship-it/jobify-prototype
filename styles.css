@@ -132,3 +132,44 @@ h1, h2, p { margin: 0; }
 .nav button.active { color: var(--green); font-weight: 700; }
 
 button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* ===== Desktop app layout (900px and wider). Mobile styles above are untouched. ===== */
+
+/* Wrapper containers added for the desktop grid. On phones they do not exist
+   visually, so the mobile layout is exactly as before. */
+.stack { display: contents; }
+.topbar { display: none; }
+
+@media (min-width: 900px) {
+  body { padding: 0; background: var(--paper); }
+
+  .app { max-width: none; height: auto; min-height: 100vh; max-height: none; border-radius: 0; box-shadow: none; overflow: visible; }
+  .app .nav { display: none; }
+
+  /* Top bar replaces the bottom nav */
+  .topbar { display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 0 40px; background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; background: none; border: none; padding: 0; min-height: 44px; font-weight: 800; font-size: 22px; color: var(--ink); }
+  .topnav { display: flex; gap: 6px; }
+  .topnav[hidden] { display: none; }
+  .topnav button { min-height: 44px; padding: 0 18px; border-radius: 999px; border: none; background: none; color: var(--muted); font-size: 15px; font-weight: 500; }
+  .topnav button:hover { background: var(--green-soft); color: var(--green); }
+  .topnav button.active { background: var(--green-soft); color: var(--green); font-weight: 700; }
+
+  .screen { flex: 1; overflow: visible; }
+
+  /* Content grid: two columns for dashboard-style screens, one narrow column for forms */
+  .pad { max-width: 1120px; width: 100%; margin: 0 auto; padding: 48px 40px 80px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; align-items: start; }
+  .pad-narrow { max-width: 720px; grid-template-columns: minmax(0, 1fr); }
+  .pad > .span { grid-column: 1 / -1; }
+  .pad-narrow > .btn { justify-self: start; min-width: 300px; }
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+
+  .title { font-size: 38px; }
+  .sub { font-size: 17px; max-width: 36em; }
+  .back { margin-bottom: -12px; justify-self: start; }
+  .pad-grid > .options { grid-row: 3 / span 2; }
+  .pad-grid > .card { padding: 24px; }
+  .project-title { font-size: 22px; }
+  .question { padding: 32px; }
+  .question div { font-size: 26px; }
+}

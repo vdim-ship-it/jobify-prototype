@@ -19,9 +19,14 @@ Open `index.html` in a browser. No install or build step is needed.
 
 To publish it, turn on GitHub Pages (Settings, Pages, deploy from the `main` branch, root folder).
 
+## Layouts
+- **Phone (under 900px wide):** the original app layout, starting at the welcome screen.
+- **Desktop (900px and wider):** a landing page (hero, how it works, features, who it is for, mission), then the app with a top navigation bar and two-column screens.
+
 ## Files
-- `index.html`: page structure
-- `styles.css`: all styling
+- `index.html`: landing page and app structure
+- `styles.css`: app styling, including the desktop layout
+- `landing.css`: landing page styling (desktop only)
 - `script.js`: screen navigation and interactions
 
 ## Author

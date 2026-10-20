@@ -27,9 +27,9 @@
   var screenEl = document.getElementById('screen');
   var navEl = document.getElementById('nav');
 
-  function set(patch) {
+  function set(patch, keepScroll) {
     for (var k in patch) state[k] = patch[k];
-    render();
+    render(keepScroll);
   }
 
   function areaLabel() { return state.areas.length ? state.areas[0] : 'Digital marketing'; }
@@ -67,7 +67,7 @@
     ].map(function (l) {
       return '<button type="button" class="option" aria-pressed="' + (state.level === l.id) + '" data-level="' + l.id + '"><b>' + l.label + '</b><span>' + l.sub + '</span></button>';
     }).join('');
-    return '<div class="pad">' +
+    return '<div class="pad pad-narrow">' +
       '<div><div class="eyebrow">STEP 1 OF 1 · SKILLS CHECK</div>' +
       '<h2 class="title">What kind of work are you aiming for?</h2>' +
       '<p class="sub">Pick one or more. We will match you to in-demand skills and real projects.</p></div>' +
@@ -80,8 +80,8 @@
   function home() {
     var done = state.tasks.filter(Boolean).length;
     var track = state.level === 'grad' ? 'FIRST-JOB READY' : 'FREELANCE READY';
-    return '<div class="pad">' +
-      '<div><div class="eyebrow">YOUR TRACK · ' + track + '</div>' +
+    return '<div class="pad pad-grid">' +
+      '<div class="span"><div class="eyebrow">YOUR TRACK · ' + track + '</div>' +
       '<h2 class="title">Welcome back. Your next project is ready.</h2></div>' +
       '<div class="card">' +
         '<div class="row"><span class="pill">' + areaLabel() + '</span><span class="small">Project 1 of 3</span></div>' +
@@ -90,10 +90,10 @@
         '<div class="small">' + done + ' of 3 steps done</div>' +
         '<button type="button" class="btn btn-sm" data-go="project">Open project</button>' +
       '</div>' +
-      '<div class="h3">Your toolkit</div>' +
+      '<div class="stack"><div class="h3">Your toolkit</div>' +
       '<button type="button" class="tile" data-go="project"><b>Mentor feedback</b><span>Submit your work and get notes from an industry mentor</span></button>' +
       '<button type="button" class="tile" data-go="portfolio"><b>Portfolio and AI resume</b><span>Turn finished projects into an ATS-friendly resume</span></button>' +
-      '<button type="button" class="tile" data-go="practice"><b>AI interview practice</b><span>Practise answers and get feedback before the real one</span></button>' +
+      '<button type="button" class="tile" data-go="practice"><b>AI interview practice</b><span>Practise answers and get feedback before the real one</span></button></div>' +
     '</div>';
   }
 
@@ -110,10 +110,10 @@
           '<div class="body"><b>Next:</b> Revise and resubmit, then add this project to your portfolio.</div>' +
           '<button type="button" class="btn btn-sm" data-go="portfolio">Add to my portfolio</button>' +
         '</div>'
-      : '<button type="button" class="btn" data-submit>Submit for mentor feedback</button>';
-    return '<div class="pad">' +
-      '<button type="button" class="back" data-go="home">← Back</button>' +
-      '<div><span class="pill">' + areaLabel() + '</span><h2 class="title" style="font-size:26px;margin-top:10px">' + project().title + '</h2></div>' +
+      : '<button type="button" class="btn span" data-submit>Submit for mentor feedback</button>';
+    return '<div class="pad pad-grid">' +
+      '<button type="button" class="back span" data-go="home">← Back</button>' +
+      '<div class="span"><span class="pill">' + areaLabel() + '</span><h2 class="title" style="font-size:26px;margin-top:10px">' + project().title + '</h2></div>' +
       '<div class="card"><div class="small" style="font-weight:700;letter-spacing:0.04em">THE BRIEF</div><div>' + project().brief + '</div></div>' +
       '<div class="options"><div class="h3">Your steps</div>' + steps + '</div>' +
       action +
@@ -132,13 +132,13 @@
           '<div class="body">• Delivered a finished piece of work for a portfolio</div>' +
           '<div class="small">Sample draft. You review and edit every line before using it.</div></div>'
       : '<button type="button" class="btn btn-sm btn-gold" data-resume>Build my resume</button>';
-    return '<div class="pad">' +
-      '<h2 class="title" style="margin-top:0">My portfolio</h2>' +
-      item +
-      '<div class="card"><div class="h3" style="font-size:17px">AI resume builder</div><div class="body small">Builds an ATS-friendly resume from the work you have done on Jobify.</div>' + resume + '</div>' +
-      '<div class="h3">Jobs and freelance matches</div>' +
+    return '<div class="pad pad-grid">' +
+      '<h2 class="title span" style="margin-top:0">My portfolio</h2>' +
+      '<div class="stack">' + item +
+      '<div class="card"><div class="h3" style="font-size:17px">AI resume builder</div><div class="body small">Builds an ATS-friendly resume from the work you have done on Jobify.</div>' + resume + '</div></div>' +
+      '<div class="stack"><div class="h3">Jobs and freelance matches</div>' +
       '<div class="card"><div class="row"><div><div class="h3" style="font-size:15px">Entry-level role · [Company name]</div><div class="small">Matches your ' + areaLabel() + ' skills</div></div><span class="pill pill-gold">Full-time</span></div></div>' +
-      '<div class="card"><div class="row"><div><div class="h3" style="font-size:15px">Small project · [Client name]</div><div class="small">Paid freelance work</div></div><span class="pill pill-gold">Freelance</span></div></div>' +
+      '<div class="card"><div class="row"><div><div class="h3" style="font-size:15px">Small project · [Client name]</div><div class="small">Paid freelance work</div></div><span class="pill pill-gold">Freelance</span></div></div></div>' +
     '</div>';
   }
 
@@ -156,7 +156,7 @@
         '<div class="body"><b>Close strong:</b> End with what you would bring to the role.</div>' +
         '<div class="btn-row"><button type="button" class="btn btn-sm btn-outline" data-rec="1">Try again</button><button type="button" class="btn btn-sm" data-next>Next question</button></div></div>';
     }
-    return '<div class="pad">' +
+    return '<div class="pad pad-narrow">' +
       '<div><div class="eyebrow">AI INTERVIEW PRACTICE · QUESTION ' + ((state.qi % QUESTIONS.length) + 1) + ' OF ' + QUESTIONS.length + '</div>' +
       '<h2 class="title">Practise the real thing.</h2></div>' +
       '<div class="question"><small>INTERVIEWER ASKS</small><div>' + q + '</div></div>' +
@@ -167,14 +167,27 @@
   /* ---------- Render ---------- */
 
   var SCREENS = { welcome: welcome, skills: skills, home: home, project: projectScreen, portfolio: portfolio, practice: practice };
+  var desktop = window.matchMedia('(min-width: 900px)');
+  var topnavEl = document.getElementById('topnav');
 
-  function render() {
+  function jump(y) { window.scrollTo({ top: y, behavior: 'instant' }); }
+
+  function render(keepScroll) {
+    // On desktop the landing page replaces the welcome screen
+    if (desktop.matches && state.screen === 'welcome') state.screen = 'skills';
+    var y = screenEl.scrollTop;
+    var wy = window.scrollY;
+    screenEl.setAttribute('data-screen', state.screen);
     screenEl.innerHTML = SCREENS[state.screen]();
-    screenEl.scrollTop = 0;
+    if (keepScroll) { screenEl.scrollTop = y; jump(wy); }
+    else { screenEl.scrollTop = 0; jump(0); }
     var showNav = state.screen !== 'welcome' && state.screen !== 'skills';
     navEl.hidden = !showNav;
-    Array.prototype.forEach.call(navEl.querySelectorAll('button'), function (b) {
-      b.classList.toggle('active', b.getAttribute('data-go') === state.screen);
+    topnavEl.hidden = !showNav;
+    [navEl, topnavEl].forEach(function (nav) {
+      Array.prototype.forEach.call(nav.querySelectorAll('button'), function (b) {
+        b.classList.toggle('active', b.getAttribute('data-go') === state.screen);
+      });
     });
   }
 
@@ -184,6 +197,10 @@
     var t = e.target.closest('button');
     if (!t) return;
 
+    // Landing page: enter the app / return to the landing page
+    if (t.hasAttribute('data-start')) { document.body.classList.remove('on-landing'); return set({ screen: 'skills' }); }
+    if (t.hasAttribute('data-landing')) { document.body.classList.add('on-landing'); return jump(0); }
+
     if (t.hasAttribute('data-go')) return set({ screen: t.getAttribute('data-go'), stage: state.screen === 'practice' ? 0 : state.stage });
 
     if (t.hasAttribute('data-area')) {
@@ -191,26 +208,22 @@
       var i = state.areas.indexOf(a);
       var next = state.areas.slice();
       if (i > -1) next.splice(i, 1); else next.push(a);
-      var y = screenEl.scrollTop;
-      set({ areas: next });
-      screenEl.scrollTop = y;
-      return;
+      return set({ areas: next }, true);
     }
-    if (t.hasAttribute('data-level')) { var y2 = screenEl.scrollTop; set({ level: t.getAttribute('data-level') }); screenEl.scrollTop = y2; return; }
+    if (t.hasAttribute('data-level')) return set({ level: t.getAttribute('data-level') }, true);
     if (t.hasAttribute('data-task')) {
       var n = Number(t.getAttribute('data-task'));
       var tasks = state.tasks.slice(); tasks[n] = !tasks[n];
-      var y3 = screenEl.scrollTop; set({ tasks: tasks }); screenEl.scrollTop = y3;
-      return;
+      return set({ tasks: tasks }, true);
     }
     if (t.hasAttribute('data-submit')) return set({ submitted: true });
-    if (t.hasAttribute('data-resume')) { var y4 = screenEl.scrollTop; set({ resume: true }); screenEl.scrollTop = y4; return; }
+    if (t.hasAttribute('data-resume')) return set({ resume: true }, true);
     if (t.hasAttribute('data-rec')) return set({ stage: Number(t.getAttribute('data-rec')) });
     if (t.hasAttribute('data-next')) return set({ qi: state.qi + 1, stage: 0 });
   }
 
-  screenEl.addEventListener('click', onClick);
-  navEl.addEventListener('click', onClick);
+  document.addEventListener('click', onClick);
+  if (desktop.addEventListener) desktop.addEventListener('change', function () { render(true); });
 
   render();
 })();
