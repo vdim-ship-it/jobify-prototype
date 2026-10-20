@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jobify app</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #F6F4EE; color: #15231C; font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<div style="flex: 1; min-height: 0; overflow-y: auto">
+
+<!-- SCREEN 1: WELCOME -->
+<sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+<div style="min-height: 844px; box-sizing: border-box; padding: 32px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; background: #0A6B45; color: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 40px; height: 40px; border-radius: 12px; background: #F4B740; color: #15231C; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px">J</div>
+<span style="font-weight: 800; font-size: 24px">Jobify</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h1 style="margin: 0; font-size: 38px; line-height: 1.1; font-weight: 800">Real work. Real feedback. Ready for the job.</h1>
+<p style="margin: 0; font-size: 17px; color: #D7EBDF">Build proof of your skills with real projects, mentors from industry, and a portfolio employers can trust.</p>
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px; font-size: 15px">
+<div style="display: flex; gap: 10px; align-items: center"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F4B740"></span>Practical projects from real workplace tasks</div>
+<div style="display: flex; gap: 10px; align-items: center"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F4B740"></span>Feedback from industry mentors</div>
+<div style="display: flex; gap: 10px; align-items: center"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F4B740"></span>AI help with your resume and interviews</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<button type="button" onClick="{{ goSkills }}" style="min-height: 52px; border: none; border-radius: 14px; background: #F4B740; color: #15231C; font-size: 17px; font-weight: 700">Get started</button>
+<div style="font-size: 12px; text-align: center; color: #D7EBDF">Prototype for user testing. All content is sample content.</div>
+</div>
+</div>
+</sc-if>
+
+<!-- SCREEN 2: SKILLS AND INTEREST CHECK -->
+<sc-if value="{{ isSkills }}" hint-placeholder-val="{{ false }}">
+<div style="box-sizing: border-box; padding: 24px 20px 32px; display: flex; flex-direction: column; gap: 20px">
+<div>
+<div style="font-size: 13px; font-weight: 700; color: #0A6B45; letter-spacing: 0.04em">STEP 1 OF 1 · SKILLS CHECK</div>
+<h2 style="margin: 6px 0 0; font-size: 28px; line-height: 1.15; font-weight: 800">What kind of work are you aiming for?</h2>
+<p style="margin: 8px 0 0; color: #5A665F">Pick one or more. We will match you to in-demand skills and real projects.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{ areas }}" as="area" hint-placeholder-count="6">
+<button type="button" onClick="{{ area.toggle }}" aria-pressed="{{ area.on }}" style="{{ area.style }}">{{ area.label }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 16px; font-weight: 700">Where are you right now?</div>
+<sc-for list="{{ levels }}" as="lv" hint-placeholder-count="2">
+<button type="button" onClick="{{ lv.pick }}" aria-pressed="{{ lv.on }}" style="{{ lv.style }}">
+<span style="font-size: 16px; font-weight: 700">{{ lv.label }}</span>
+<span style="font-size: 14px; color: #5A665F">{{ lv.sub }}</span>
+</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{ goHome }}" style="min-height: 52px; border: none; border-radius: 14px; background: #0A6B45; color: #FFFFFF; font-size: 17px; font-weight: 700">See my matches</button>
+</div>
+</sc-if>
+
+<!-- SCREEN 3: HOME / PROJECT DASHBOARD -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+<div style="box-sizing: border-box; padding: 24px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+<div>
+<div style="font-size: 13px; font-weight: 700; color: #0A6B45; letter-spacing: 0.04em">YOUR TRACK · {{ trackName }}</div>
+<h2 style="margin: 6px 0 0; font-size: 28px; line-height: 1.15; font-weight: 800">Welcome back. Your next project is ready.</h2>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; background: #E4F1EA; color: #0A6B45; padding: 4px 10px; border-radius: 999px">{{ areaLabel }}</span>
+<span style="font-size: 13px; color: #5A665F">Project 1 of 3</span>
+</div>
+<div style="font-size: 20px; font-weight: 800; line-height: 1.25">{{ projectTitle }}</div>
+<div style="height: 8px; border-radius: 4px; background: #E3DFD3; overflow: hidden"><div style="width: {{ progressW }}; height: 8px; background: #0A6B45"></div></div>
+<div style="font-size: 13px; color: #5A665F">{{ progressText }}</div>
+<button type="button" onClick="{{ goProject }}" style="min-height: 48px; border: none; border-radius: 12px; background: #0A6B45; color: #FFFFFF; font-size: 16px; font-weight: 700">Open project</button>
+</div>
+<div style="font-size: 16px; font-weight: 700">Your toolkit</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<button type="button" onClick="{{ goProject }}" style="text-align: left; min-height: 64px; padding: 12px 16px; background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; color: #15231C">
+<span style="font-size: 16px; font-weight: 700">Mentor feedback</span>
+<span style="font-size: 14px; color: #5A665F">Submit your work and get notes from an industry mentor</span>
+</button>
+<button type="button" onClick="{{ goPortfolio }}" style="text-align: left; min-height: 64px; padding: 12px 16px; background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; color: #15231C">
+<span style="font-size: 16px; font-weight: 700">Portfolio and AI resume</span>
+<span style="font-size: 14px; color: #5A665F">Turn finished projects into an ATS-friendly resume</span>
+</button>
+<button type="button" onClick="{{ goPractice }}" style="text-align: left; min-height: 64px; padding: 12px 16px; background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; color: #15231C">
+<span style="font-size: 16px; font-weight: 700">AI interview practice</span>
+<span style="font-size: 14px; color: #5A665F">Practise answers and get feedback before the real one</span>
+</button>
+</div>
+</div>
+</sc-if>
+
+<!-- SCREEN 4: PROJECT + MENTOR FEEDBACK -->
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+<div style="box-sizing: border-box; padding: 24px 20px 24px; display: flex; flex-direction: column; gap: 16px">
+<button type="button" onClick="{{ goHome }}" style="align-self: flex-start; min-height: 44px; padding: 0 4px; background: none; border: none; color: #0A6B45; font-size: 15px; font-weight: 700">← Back</button>
+<div>
+<span style="font-size: 12px; font-weight: 700; background: #E4F1EA; color: #0A6B45; padding: 4px 10px; border-radius: 999px">{{ areaLabel }}</span>
+<h2 style="margin: 10px 0 0; font-size: 26px; line-height: 1.2; font-weight: 800">{{ projectTitle }}</h2>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 13px; font-weight: 700; color: #5A665F; letter-spacing: 0.04em">THE BRIEF</div>
+<div style="font-size: 15px">{{ projectBrief }}</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 16px; font-weight: 700">Your steps</div>
+<sc-for list="{{ tasks }}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{ t.toggle }}" aria-pressed="{{ t.done }}" style="text-align: left; min-height: 52px; padding: 10px 14px; background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 12px; display: flex; align-items: center; gap: 12px; color: #15231C; font-size: 15px">
+<span style="{{ t.boxStyle }}">{{ t.mark }}</span>
+<span>{{ t.label }}</span>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{ submit }}" style="min-height: 52px; border: none; border-radius: 14px; background: #0A6B45; color: #FFFFFF; font-size: 17px; font-weight: 700">Submit for mentor feedback</button>
+</sc-if>
+<sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 2px solid #0A6B45; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 36px; height: 36px; border-radius: 18px; background: #F4B740; color: #15231C; display: flex; align-items: center; justify-content: center; font-weight: 800">M</div>
+<div>
+<div style="font-size: 15px; font-weight: 700">Mentor feedback</div>
+<div style="font-size: 13px; color: #5A665F">Industry mentor · sample comment</div>
+</div>
+</div>
+<div style="font-size: 14px"><b>What worked:</b> Your plan is clear and easy to follow, and it matches what the client asked for.</div>
+<div style="font-size: 14px"><b>To improve:</b> Add one measurable goal and explain why you chose your approach.</div>
+<div style="font-size: 14px"><b>Next:</b> Revise and resubmit, then add this project to your portfolio.</div>
+<button type="button" onClick="{{ goPortfolio }}" style="min-height: 48px; border: none; border-radius: 12px; background: #0A6B45; color: #FFFFFF; font-size: 16px; font-weight: 700">Add to my portfolio</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- SCREEN 5: PORTFOLIO, AI RESUME, MATCHES -->
+<sc-if value="{{ isPortfolio }}" hint-placeholder-val="{{ false }}">
+<div style="box-sizing: border-box; padding: 24px 20px 24px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 28px; line-height: 1.15; font-weight: 800">My portfolio</h2>
+<sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+<span style="align-self: flex-start; font-size: 12px; font-weight: 700; background: #E4F1EA; color: #0A6B45; padding: 4px 10px; border-radius: 999px">Reviewed by a mentor</span>
+<div style="font-size: 17px; font-weight: 700">{{ projectTitle }}</div>
+<div style="font-size: 14px; color: #5A665F">{{ areaLabel }} · Real-work project</div>
+</div>
+</sc-if>
+<sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+<div style="background: #FFFFFF; border: 1px dashed #A9B3AC; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; color: #5A665F">No projects here yet. Finish and submit your first project to add it.</div>
+<button type="button" onClick="{{ goProject }}" style="min-height: 48px; border: none; border-radius: 12px; background: #0A6B45; color: #FFFFFF; font-size: 16px; font-weight: 700">Go to my project</button>
+</div>
+</sc-if>
+
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 17px; font-weight: 700">AI resume builder</div>
+<div style="font-size: 14px; color: #5A665F">Builds an ATS-friendly resume from the work you have done on Jobify.</div>
+<sc-if value="{{ resumeHidden }}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{ makeResume }}" style="min-height: 48px; border: none; border-radius: 12px; background: #F4B740; color: #15231C; font-size: 16px; font-weight: 700">Build my resume</button>
+</sc-if>
+<sc-if value="{{ resumeShown }}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #E3DFD3; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: #F6F4EE">
+<span style="align-self: flex-start; font-size: 12px; font-weight: 700; background: #E4F1EA; color: #0A6B45; padding: 4px 10px; border-radius: 999px">ATS-friendly format</span>
+<div style="font-size: 14px; font-weight: 700">Project experience</div>
+<div style="font-size: 14px">• Completed a real-work project: {{ projectTitle }}</div>
+<div style="font-size: 14px">• Received and applied written feedback from an industry mentor</div>
+<div style="font-size: 14px">• Delivered a finished piece of work for a portfolio</div>
+<div style="font-size: 13px; color: #5A665F">Sample draft. You review and edit every line before using it.</div>
+</div>
+</sc-if>
+</div>
+
+<div style="font-size: 16px; font-weight: 700">Jobs and freelance matches</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<div><div style="font-size: 15px; font-weight: 700">Entry-level role · [Company name]</div><div style="font-size: 13px; color: #5A665F">Matches your {{ areaLabel }} skills</div></div>
+<span style="font-size: 12px; font-weight: 700; background: #FCE9C2; color: #6B4A00; padding: 4px 10px; border-radius: 999px">Full-time</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<div><div style="font-size: 15px; font-weight: 700">Small project · [Client name]</div><div style="font-size: 13px; color: #5A665F">Paid freelance work</div></div>
+<span style="font-size: 12px; font-weight: 700; background: #FCE9C2; color: #6B4A00; padding: 4px 10px; border-radius: 999px">Freelance</span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- SCREEN 6: AI INTERVIEW PRACTICE -->
+<sc-if value="{{ isPractice }}" hint-placeholder-val="{{ false }}">
+<div style="box-sizing: border-box; padding: 24px 20px 24px; display: flex; flex-direction: column; gap: 16px">
+<div>
+<div style="font-size: 13px; font-weight: 700; color: #0A6B45; letter-spacing: 0.04em">AI INTERVIEW PRACTICE · {{ qNumber }}</div>
+<h2 style="margin: 6px 0 0; font-size: 28px; line-height: 1.15; font-weight: 800">Practise the real thing.</h2>
+</div>
+<div style="background: #0A6B45; color: #FFFFFF; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 13px; font-weight: 700; color: #D7EBDF">INTERVIEWER ASKS</div>
+<div style="font-size: 21px; font-weight: 700; line-height: 1.3">{{ question }}</div>
+</div>
+<sc-if value="{{ stage0 }}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{ startRec }}" style="min-height: 56px; border: none; border-radius: 14px; background: #F4B740; color: #15231C; font-size: 17px; font-weight: 700">Tap to answer</button>
+</sc-if>
+<sc-if value="{{ stage1 }}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1px solid #E3DFD3; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700"><span style="width: 12px; height: 12px; border-radius: 6px; background: #C0392B"></span>Listening to your answer…</div>
+<button type="button" onClick="{{ stopRec }}" style="min-height: 48px; border: none; border-radius: 12px; background: #0A6B45; color: #FFFFFF; font-size: 16px; font-weight: 700">Finish and get feedback</button>
+</div>
+</sc-if>
+<sc-if value="{{ stage2 }}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 2px solid #0A6B45; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 16px; font-weight: 700">AI feedback (sample)</div>
+<div style="font-size: 14px"><b>Clear opening:</b> You started with a direct answer. Good.</div>
+<div style="font-size: 14px"><b>Add an example:</b> Tell one short story from a project to back up your point.</div>
+<div style="font-size: 14px"><b>Close strong:</b> End with what you would bring to the role.</div>
+<div style="display: flex; gap: 10px">
+<button type="button" onClick="{{ startRec }}" style="flex: 1; min-height: 48px; border: 1px solid #0A6B45; border-radius: 12px; background: #FFFFFF; color: #0A6B45; font-size: 15px; font-weight: 700">Try again</button>
+<button type="button" onClick="{{ nextQ }}" style="flex: 1; min-height: 48px; border: none; border-radius: 12px; background: #0A6B45; color: #FFFFFF; font-size: 15px; font-weight: 700">Next question</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Main" style="display: flex; border-top: 1px solid #E3DFD3; background: #FFFFFF; padding: 4px 8px 8px">
+<button type="button" onClick="{{ goHome }}" style="{{ navHome }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg>
+<span>Home</span>
+</button>
+<button type="button" onClick="{{ goProject }}" style="{{ navProject }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"></path></svg>
+<span>Project</span>
+</button>
+<button type="button" onClick="{{ goPortfolio }}" style="{{ navPortfolio }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5h6v2"></path></svg>
+<span>Portfolio</span>
+</button>
+<button type="button" onClick="{{ goPractice }}" style="{{ navPractice }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"></rect><path d="M5 11a7 7 0 0014 0M12 18v3"></path></svg>
+<span>Practice</span>
+</button>
+</nav>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const d = { screen: 'welcome', areas: [], level: 'grad', tasks: [false, false, false], submitted: false, resume: false, qi: 0, stage: 0 };
+    const s = Object.assign({}, d, this.state);
+    const go = (name) => () => this.setState({ screen: name });
+
+    const AREAS = ['Digital marketing', 'Product design', 'Data analysis', 'Customer support', 'Web development', 'Sales'];
+    const PROJECTS = {
+      'Digital marketing': { title: 'Plan a 4-week social media campaign for a small bakery', brief: 'A local bakery wants more customers online. Create a simple 4-week content plan with post ideas, a posting schedule and one goal.' },
+      'Product design': { title: 'Redesign the checkout screen of a food delivery app', brief: 'Customers drop off at checkout. Sketch a clearer, faster checkout screen and explain the three changes you made.' },
+      'Data analysis': { title: 'Clean and summarise a sales sheet for a retail shop', brief: 'A shop owner has a messy sales spreadsheet. Clean it, find the top three products and write a short summary.' },
+      'Customer support': { title: 'Write replies to five customer complaints', brief: 'A growing business gets repeated complaints. Write clear, kind replies and one process change that would reduce them.' },
+      'Web development': { title: 'Build a simple booking page for a barber shop', brief: 'A barber wants customers to book online. Build a one-page site with services, prices and a booking form.' },
+      'Sales': { title: 'Create an outreach plan for 20 small business leads', brief: 'A new service needs its first customers. Build a lead list, a short message and a follow-up plan.' }
+    };
+    const QUESTIONS = ['Tell me about yourself.', 'Describe a project you completed and what you learned.', 'Why should we hire you for this role?'];
+    const STEPS = ['Read the brief and note what the client needs', 'Draft your plan or solution', 'Review and polish your work'];
+
+    const areaLabel = s.areas.length ? s.areas[0] : 'Digital marketing';
+    const proj = PROJECTS[areaLabel];
+
+    const chipOn = 'min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid #0A6B45; background: #0A6B45; color: #FFFFFF; font-size: 15px; font-weight: 700';
+    const chipOff = 'min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid #D5D0C2; background: #FFFFFF; color: #15231C; font-size: 15px; font-weight: 500';
+    const areas = AREAS.map((label) => {
+      const on = s.areas.indexOf(label) > -1;
+      return {
+        label: label,
+        on: on,
+        style: on ? chipOn : chipOff,
+        toggle: () => this.setState({ areas: on ? s.areas.filter((a) => a !== label) : s.areas.concat([label]) })
+      };
+    });
+
+    const cardOn = 'text-align: left; min-height: 64px; padding: 12px 16px; border-radius: 14px; border: 2px solid #0A6B45; background: #E4F1EA; color: #15231C; display: flex; flex-direction: column; gap: 2px';
+    const cardOff = 'text-align: left; min-height: 64px; padding: 12px 16px; border-radius: 14px; border: 2px solid #D5D0C2; background: #FFFFFF; color: #15231C; display: flex; flex-direction: column; gap: 2px';
+    const levels = [
+      { id: 'grad', label: 'Recent graduate', sub: 'I have a degree but no work experience yet' },
+      { id: 'self', label: 'Self-taught, no degree', sub: 'I am learning on my own and want to earn' }
+    ].map((lv) => ({
+      label: lv.label,
+      sub: lv.sub,
+      on: s.level === lv.id,
+      style: s.level === lv.id ? cardOn : cardOff,
+      pick: () => this.setState({ level: lv.id })
+    }));
+
+    const done = s.tasks.filter(Boolean).length;
+    const tasks = STEPS.map((label, i) => ({
+      label: label,
+      done: s.tasks[i],
+      mark: s.tasks[i] ? '✓' : '',
+      boxStyle: s.tasks[i]
+        ? 'width: 26px; height: 26px; border-radius: 8px; background: #0A6B45; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; flex: none'
+        : 'width: 26px; height: 26px; border-radius: 8px; border: 2px solid #A9B3AC; background: #FFFFFF; flex: none',
+      toggle: () => this.setState({ tasks: s.tasks.map((v, j) => (j === i ? !v : v)) })
+    }));
+
+    const navOn = 'flex: 1; min-height: 56px; background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 700; color: #0A6B45';
+    const navOff = 'flex: 1; min-height: 56px; background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: #5A665F';
+
+    return {
+      isWelcome: s.screen === 'welcome',
+      isSkills: s.screen === 'skills',
+      isHome: s.screen === 'home',
+      isProject: s.screen === 'project',
+      isPortfolio: s.screen === 'portfolio',
+      isPractice: s.screen === 'practice',
+      showNav: s.screen !== 'welcome' && s.screen !== 'skills',
+      navHome: s.screen === 'home' ? navOn : navOff,
+      navProject: s.screen === 'project' ? navOn : navOff,
+      navPortfolio: s.screen === 'portfolio' ? navOn : navOff,
+      navPractice: s.screen === 'practice' ? navOn : navOff,
+      goSkills: go('skills'),
+      goHome: go('home'),
+      goProject: go('project'),
+      goPortfolio: go('portfolio'),
+      goPractice: go('practice'),
+      areas: areas,
+      levels: levels,
+      trackName: s.level === 'grad' ? 'FIRST-JOB READY' : 'FREELANCE READY',
+      areaLabel: areaLabel,
+      projectTitle: proj.title,
+      projectBrief: proj.brief,
+      tasks: tasks,
+      progressW: Math.round((done / 3) * 100) + '%',
+      progressText: done + ' of 3 steps done',
+      submitted: s.submitted,
+      notSubmitted: !s.submitted,
+      submit: () => this.setState({ submitted: true }),
+      resumeShown: s.resume,
+      resumeHidden: !s.resume,
+      makeResume: () => this.setState({ resume: true }),
+      question: QUESTIONS[s.qi % QUESTIONS.length],
+      qNumber: 'QUESTION ' + ((s.qi % QUESTIONS.length) + 1) + ' OF ' + QUESTIONS.length,
+      stage0: s.stage === 0,
+      stage1: s.stage === 1,
+      stage2: s.stage === 2,
+      startRec: () => this.setState({ stage: 1 }),
+      stopRec: () => this.setState({ stage: 2 }),
+      nextQ: () => this.setState({ qi: s.qi + 1, stage: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>
