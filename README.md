@@ -14,8 +14,15 @@ Built for the ALU Capstone Proposal and Prep: Field Mission Assignment.
 
 All content is sample content for user testing.
 
+## Run it
+Open `index.html` in a browser. No install or build step is needed.
+
+To publish it, turn on GitHub Pages (Settings, Pages, deploy from the `main` branch, root folder).
+
 ## Files
-- `Main.dc.html`: the prototype source (a design component page; it renders inside the design canvas it was made in).
+- `index.html`: page structure
+- `styles.css`: all styling
+- `script.js`: screen navigation and interactions
 
 ## Author
 Vida Dim
