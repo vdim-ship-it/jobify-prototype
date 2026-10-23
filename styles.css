@@ -131,6 +131,15 @@ h1, h2, p { margin: 0; }
 .nav button { flex: 1; min-height: 56px; background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: var(--muted); }
 .nav button.active { color: var(--green); font-weight: 700; }
 
+/* Iteration 1: trust layer and flexible resume options */
+.verified { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--green); background: var(--green-soft); padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.seg { display: flex; flex-direction: column; gap: 8px; }
+.seg button { min-height: 44px; padding: 0 14px; text-align: left; border-radius: 12px; border: 2px solid var(--line-strong); background: #fff; color: var(--ink); font-size: 15px; font-weight: 500; }
+.seg button[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); font-weight: 700; }
+.btn-stack { display: flex; flex-direction: column; gap: 10px; }
+.trust { background: var(--green-soft); border-radius: 14px; padding: 14px; font-size: 14px; }
+.fineprint { font-size: 13px; color: var(--muted); text-align: center; }
+
 button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
 /* ===== Desktop app layout (900px and wider). Mobile styles above are untouched. ===== */

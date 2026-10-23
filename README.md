@@ -19,6 +19,10 @@ Open `index.html` in a browser. No install or build step is needed.
 
 To publish it, turn on GitHub Pages (Settings, Pages, deploy from the `main` branch, root folder).
 
+## Iteration 1 (from user testing with 9 stakeholders)
+- **Trust layer:** verified mentor, employer and client badges, a "who can see my portfolio" control, and a privacy note.
+- **Fits more people:** four new career fields (photography and video, graphic design, content creation, AI data annotation), and the option to upload a CV or portfolio link instead of building a resume.
+
 ## Layouts
 - **Phone (under 900px wide):** the original app layout, starting at the welcome screen.
 - **Desktop (900px and wider):** a landing page (hero, how it works, features, who it is for, mission), then the app with a top navigation bar and two-column screens.
